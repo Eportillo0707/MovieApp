@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/discoverMovies">
+
+
+    <fragment
+        android:id="@+id/discoverMovies"
+        android:name="tmdb.arch.movieapp.ui.screens.discover.DiscoverMovies"
+        android:label="DiscoverMovies">
+        <action
+            android:id="@+id/discoverMovies_to_searchMovies"
+            app:destination="@id/searchMovies" />
+        <action
+            android:id="@+id/discoverMovies_to_savedMovies"
+            app:destination="@id/savedMovies" />
+        <action
+            android:id="@+id/discoverMovies_to_movieDetails"
+            app:destination="@id/movieDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetails"
+        android:name="tmdb.arch.movieapp.ui.screens.details.MovieDetails"
+        android:label="MovieDetails" >
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedMovies"
+        android:name="tmdb.arch.movieapp.ui.screens.saved.SavedMovies"
+        android:label="SavedMovies">
+        <action
+            android:id="@+id/savedMovies_to_movieDetails"
+            app:destination="@id/movieDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchMovies"
+        android:name="tmdb.arch.movieapp.ui.screens.search.SearchMovies"
+        android:label="SearchMovies">
+        <action
+            android:id="@+id/searchMovies_to_movieDetails"
+            app:destination="@id/movieDetails" />
+    </fragment>
+</navigation>
