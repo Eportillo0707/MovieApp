@@ -1,5 +1,6 @@
 package tmdb.arch.movieapp.ui.screens.details
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -23,18 +24,30 @@ import viewBinding
 class MovieDetails : Fragment(R.layout.movie_details) {
     private val binding by viewBinding(MovieDetailsBinding::bind)
     private val args by navArgs<MovieDetailsArgs>()
-    private val viewModel by viewModel<MovieDetailsViewModel>{parametersOf(args.id)}
+    private val viewModel by viewModel<MovieDetailsViewModel> { parametersOf(args.id) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
         subscribeUi()
 
+
+    }
+
+    private fun initView() {
+        binding.toWatchButton.setOnClickListener {
+            viewModel.onToWatchButtonClicked()
+
+        }
+        binding.saveButton.setOnClickListener {
+            viewModel.onFavoriteButtonClicked()
+        }
     }
 
     private fun subscribeUi() {
         lifecycleScope.launch {
-            viewModel.movie.collect({state ->
+            viewModel.movie.collect({ state ->
                 println(state)
             })
         }
@@ -62,6 +75,7 @@ class MovieDetails : Fragment(R.layout.movie_details) {
                         }
                         .show()
                 }
+
                 is UiState.Result -> {
                     val item = state.item
 
@@ -73,14 +87,22 @@ class MovieDetails : Fragment(R.layout.movie_details) {
                     binding.overview.text = item.overview
                     binding.poster.load(BuildConfig.IMAGE_URL + item.posterPath)
 
-            }
+                    binding.toWatchIcon.setColorFilter(
+                        if (item.isToWatch) Color.RED
+                        else Color.BLACK
 
+                    )
+                    binding.saveIcon.setColorFilter(
+                        if (item.isFavored) Color.RED
+                        else Color.BLACK
+                    )
+                }
+
+
+            }
 
 
         }
 
-
     }
-
-}
 }

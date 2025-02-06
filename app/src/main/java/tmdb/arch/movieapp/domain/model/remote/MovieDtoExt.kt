@@ -16,6 +16,7 @@ fun MovieDto.toModel(): Movie =
         releaseDate = this.releaseDate,
         title = this.title,
         video = this.video,
+        runtime = this.runtime,
         voteAverage = this.voteAverage,
         voteCount = this.voteCount,
     )

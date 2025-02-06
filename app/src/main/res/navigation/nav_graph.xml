@@ -34,6 +34,9 @@
         <action
             android:id="@+id/savedMovies_to_movieDetails"
             app:destination="@id/movieDetails" />
+        <argument
+            android:name="command"
+            app:argType="tmdb.arch.movieapp.domain.usecases.GetSavedMoviesUseCase$Cmd" />
     </fragment>
     <fragment
         android:id="@+id/searchMovies"

@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import tmdb.arch.movieapp.domain.local.MoviesDao
 import tmdb.arch.movieapp.domain.remote.AuthInterceptor
 import tmdb.arch.movieapp.domain.remote.MoviesServices
 import tmdb.arch.movieapp.domain.repository.MoviesRepository
@@ -12,14 +13,14 @@ import java.util.concurrent.TimeUnit
 val remoteModule
     get() =
         module {
-            single { MoviesRepository(moviesServices) }
+            single { MoviesRepository(moviesServices, get<MoviesDao>()) }
         }
 
 private val httpClient
     get() = OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor())
-            .callTimeout(30L, TimeUnit.SECONDS)
-            .build()
+        .addInterceptor(AuthInterceptor())
+        .callTimeout(30L, TimeUnit.SECONDS)
+        .build()
 
 private val retrofit
     get() =
