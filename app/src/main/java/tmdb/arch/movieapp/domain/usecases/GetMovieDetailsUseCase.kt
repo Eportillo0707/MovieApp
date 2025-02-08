@@ -4,23 +4,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
-import tmdb.arch.movieapp.domain.model.Movie
-import tmdb.arch.movieapp.domain.repository.MoviesRepository
-import tmdb.arch.movieapp.utils.UiState
+import tmdb.arch.movieapp.repository.models.Movie
+import tmdb.arch.movieapp.repository.repository.MoviesRepository
+import com.example.arch.utils.UiState
 
 class GetMovieDetailsUseCase(private val repository: MoviesRepository) {
 
-    operator fun invoke(id: Long): Flow<UiState<Movie>> = flow {
-        emit(UiState.Loading)
+    operator fun invoke(id: Long): Flow<com.example.arch.utils.UiState<Movie>> = flow {
+        emit(com.example.arch.utils.UiState.Loading)
         val result = repository.getMovieDetails(id)
-        emit(UiState.Result(result))
+        emit(com.example.arch.utils.UiState.Result(result))
 
         repository.getFavoritesIds()
             .combine(repository.getToWatchIds()) { favs, toWatch ->
                 val isFaved = favs.any { movieId -> movieId == id }
                 val isToWatch = toWatch.any { movieId -> movieId == id }
 
-                return@combine UiState.Result(
+                return@combine com.example.arch.utils.UiState.Result(
                     result.copy(
                         isFavored = isFaved,
                         isToWatch = isToWatch
@@ -29,7 +29,7 @@ class GetMovieDetailsUseCase(private val repository: MoviesRepository) {
             }.collect(::emit)
 
     }.catch {
-        UiState.Error
+        com.example.arch.utils.UiState.Error
 
     }
 

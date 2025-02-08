@@ -1,17 +1,15 @@
 package tmdb.arch.movieapp.domain.usecases
 
-import androidx.room.Query
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
-import tmdb.arch.movieapp.domain.model.Movie
-import tmdb.arch.movieapp.domain.repository.MoviesRepository
-import tmdb.arch.movieapp.utils.UiState
+import tmdb.arch.movieapp.repository.models.Movie
+import tmdb.arch.movieapp.repository.repository.MoviesRepository
+import com.example.arch.utils.UiState
 
 class MoviesSearchInteractor(
     private val repository: MoviesRepository
@@ -25,25 +23,25 @@ class MoviesSearchInteractor(
     )
 
     @OptIn(FlowPreview::class)
-    val searchResult: Flow<UiState<List<Movie>>>
+    val searchResult: Flow<com.example.arch.utils.UiState<List<Movie>>>
         get() = _searchFlow
             .filter(CharSequence::isNotBlank)
             .debounce(DEBOUNCE_DURATION)
             .map(CharSequence::toString)
             .map(::performSearch)
-            .catch { emit(UiState.Error) }
+            .catch { emit(com.example.arch.utils.UiState.Error) }
 
     fun searchQuery(query: CharSequence){
         _searchFlow.tryEmit(query)
     }
 
-    private suspend fun performSearch(query: String): UiState<List<Movie>> {
+    private suspend fun performSearch(query: String): com.example.arch.utils.UiState<List<Movie>> {
 
         return try {
             val result = repository.findMovies(query)
-            if (result.isEmpty()) UiState.Error else UiState.Result(result)
+            if (result.isEmpty()) com.example.arch.utils.UiState.Error else com.example.arch.utils.UiState.Result(result)
         } catch (ex: Exception) {
-            UiState.Error
+            com.example.arch.utils.UiState.Error
 
         }
 

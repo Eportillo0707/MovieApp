@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "Movie App"
 include ':app'
 include ':repository'
+include ':arch'
+include ':compose'

@@ -14,8 +14,8 @@ import tmdb.arch.movieapp.domain.usecases.GetSavedMoviesUseCase
 import tmdb.arch.movieapp.ui.screens.discover.adapters.HeaderListAdapter
 import tmdb.arch.movieapp.ui.screens.discover.adapters.MoviesListAdapter
 import tmdb.arch.movieapp.ui.screens.discover.adapters.MoviesListStateAdapter
-import tmdb.arch.movieapp.utils.delegates.autoNull
-import tmdb.arch.movieapp.utils.extensions.collectRepeatOnStart
+import com.example.arch.utils.delegates.autoNull
+import com.example.arch.utils.extensions.collectRepeatOnStart
 import viewBinding
 
 class DiscoverMovies : Fragment(R.layout.movies_discover) {

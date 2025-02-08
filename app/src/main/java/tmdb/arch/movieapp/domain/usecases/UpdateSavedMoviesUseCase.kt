@@ -1,8 +1,7 @@
 package tmdb.arch.movieapp.domain.usecases
 
-import kotlinx.coroutines.flow.SharingCommand
-import tmdb.arch.movieapp.domain.model.Movie
-import tmdb.arch.movieapp.domain.repository.MoviesRepository
+import tmdb.arch.movieapp.repository.models.Movie
+import tmdb.arch.movieapp.repository.repository.MoviesRepository
 
 class UpdateSavedMoviesUseCase(
     private val repository: MoviesRepository,

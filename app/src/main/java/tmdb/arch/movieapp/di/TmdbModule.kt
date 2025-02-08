@@ -2,7 +2,7 @@ package tmdb.arch.movieapp.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmdb.arch.movieapp.domain.repository.MoviesRepository
+import tmdb.arch.movieapp.repository.repository.MoviesRepository
 import tmdb.arch.movieapp.domain.usecases.GetLatestMoviesUseCase
 import tmdb.arch.movieapp.domain.usecases.GetMovieDetailsUseCase
 import tmdb.arch.movieapp.domain.usecases.GetSavedMoviesUseCase

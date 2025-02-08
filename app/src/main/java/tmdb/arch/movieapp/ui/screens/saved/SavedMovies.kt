@@ -10,8 +10,8 @@ import org.koin.core.parameter.parametersOf
 import tmdb.arch.movieapp.R
 import tmdb.arch.movieapp.databinding.MoviesSavedBinding
 import tmdb.arch.movieapp.ui.screens.saved.adapters.SavedMoviesAdapter
-import tmdb.arch.movieapp.utils.delegates.autoNull
-import tmdb.arch.movieapp.utils.extensions.collectRepeatOnStart
+import com.example.arch.utils.delegates.autoNull
+import com.example.arch.utils.extensions.collectRepeatOnStart
 import viewBinding
 
 class SavedMovies : Fragment(R.layout.movies_saved) {

@@ -9,16 +9,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.example.arch.utils.UiState
+import com.example.arch.utils.extensions.collectRepeatOnStart
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.MaterialFade
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import tmdb.arch.movieapp.BuildConfig
 import tmdb.arch.movieapp.R
 import tmdb.arch.movieapp.databinding.MovieDetailsBinding
-import tmdb.arch.movieapp.utils.UiState
-import tmdb.arch.movieapp.utils.extensions.collectRepeatOnStart
 import viewBinding
 
 class MovieDetails : Fragment(R.layout.movie_details) {
