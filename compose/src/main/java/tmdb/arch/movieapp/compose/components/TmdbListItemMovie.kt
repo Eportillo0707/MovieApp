@@ -78,7 +78,7 @@ fun TmdbListItemMovie(
             if (rating != null) {
                 TmdbIconText(
                     painter = painterResource(id = R.drawable.ic_star),
-                    text = "Rating: $playtime"
+                    text = "Rating: $rating / 10 TMDB"
                 )
             }
 

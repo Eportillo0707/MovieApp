@@ -2,6 +2,7 @@ package tmdb.arch.movieapp.repository.repository.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import kotlinx.coroutines.delay
 import tmdb.arch.movieapp.repository.models.Movie
 import tmdb.arch.movieapp.repository.remote.MoviesServices
 import tmdb.arch.movieapp.repository.remote.model.MovieDto
@@ -18,6 +19,9 @@ internal class LatestMoviesPagingSource(
             val response = service.getLatestMovies(key)
                 .movieDtos
                 .map(MovieDto::toModel)
+
+            delay(5000)
+
             LoadResult.Page(
                 data = response,
                 prevKey = null,

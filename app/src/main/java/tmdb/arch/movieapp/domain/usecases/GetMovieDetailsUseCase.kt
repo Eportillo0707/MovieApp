@@ -10,17 +10,17 @@ import com.example.arch.utils.UiState
 
 class GetMovieDetailsUseCase(private val repository: MoviesRepository) {
 
-    operator fun invoke(id: Long): Flow<com.example.arch.utils.UiState<Movie>> = flow {
-        emit(com.example.arch.utils.UiState.Loading)
+    operator fun invoke(id: Long): Flow<UiState<Movie>> = flow {
+        emit(UiState.Loading)
         val result = repository.getMovieDetails(id)
-        emit(com.example.arch.utils.UiState.Result(result))
+        emit(UiState.Result(result))
 
         repository.getFavoritesIds()
             .combine(repository.getToWatchIds()) { favs, toWatch ->
                 val isFaved = favs.any { movieId -> movieId == id }
                 val isToWatch = toWatch.any { movieId -> movieId == id }
 
-                return@combine com.example.arch.utils.UiState.Result(
+                return@combine UiState.Result(
                     result.copy(
                         isFavored = isFaved,
                         isToWatch = isToWatch
@@ -29,7 +29,7 @@ class GetMovieDetailsUseCase(private val repository: MoviesRepository) {
             }.collect(::emit)
 
     }.catch {
-        com.example.arch.utils.UiState.Error
+        UiState.Error
 
     }
 

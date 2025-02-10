@@ -10,7 +10,7 @@ internal class ToWatchEntity (
     @ColumnInfo(name = "movie_id")
     val movieId: Long,
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String?,
     @ColumnInfo(name = "original_title")
     val originalTitle: String?,
     @ColumnInfo(name = "release_date")

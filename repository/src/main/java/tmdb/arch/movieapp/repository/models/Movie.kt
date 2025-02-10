@@ -12,9 +12,9 @@ data class Movie(
     val popularity: Double? = null,
     val posterPath: String? = null,
     val releaseDate: String? = null,
-    val title: String,
+    val title: String?,
     val video: Boolean? = null,
-    val voteAverage: String? = null,
+    val voteAverage: String?,
     val voteCount: Int? = null,
     var isFavored: Boolean = false,
     var isToWatch: Boolean = false

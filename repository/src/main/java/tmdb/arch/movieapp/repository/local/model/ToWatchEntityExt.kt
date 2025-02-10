@@ -8,7 +8,8 @@ internal fun ToWatchEntity.toModel(): Movie = Movie(
     originalTitle = this.originalTitle,
     title = this.title,
     overview = this.overview,
-    posterPath = this.posterPath
+    posterPath = this.posterPath,
+    voteAverage = this.voteAverage,
 
 )
 

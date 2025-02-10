@@ -1,4 +1,5 @@
 package tmdb.arch.movieapp.ui.screens.discover
+
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -26,28 +28,28 @@ import androidx.paging.compose.itemKey
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tmdb.arch.movieapp.BuildConfig
-import tmdb.arch.movieapp.R
-
 import tmdb.arch.movieapp.compose.components.TmdbError
 import tmdb.arch.movieapp.compose.components.TmdbListItemMovie
 import tmdb.arch.movieapp.compose.components.TmdbLoading
 import tmdb.arch.movieapp.compose.theme.TmdbTheme
+import tmdb.arch.movieapp.domain.usecases.GetSavedMoviesUseCase
 import tmdb.arch.movieapp.repository.models.Movie
 
 @Composable
 fun DiscoverMoviesScreen(
     viewModel: DiscoverMoviesViewModel,
-    onMovieClicked: (Long) -> Unit,
-    onSearchClicked: () -> Unit,
-    onFavoriteClicked: () -> Unit,
-    onToWatchClicked: () -> Unit
+    navController: NavController,
 ) {
     ScreenContent(
         movies = viewModel.movies,
-        onSearchClicked = onSearchClicked,
-        onFavoriteClicked = onFavoriteClicked,
-        onToWatchClicked = onToWatchClicked,
-        onMovieClicked = onMovieClicked
+        onSearchClicked = { navController.navigate("search") },
+        onFavoriteClicked = {
+            val cmd = GetSavedMoviesUseCase.Cmd.FAVORITES.name
+            navController.navigate("saved/$cmd") },
+        onToWatchClicked = {
+            val cmd = GetSavedMoviesUseCase.Cmd.TO_WATCH.name
+            navController.navigate("saved/$cmd") },
+        onMovieClicked = { navController.navigate("details/$it") }
     )
 }
 
@@ -140,13 +142,13 @@ private fun ColumnScope.ListItem(
                     val item = moviesState[it] ?: return@items
 
                     TmdbListItemMovie(
-                        title = item.title,
+                        title = item.title.toString(),
                         model = BuildConfig.IMAGE_URL + item.posterPath,
                         language = item.originalLanguage,
-                        rating = item.voteAverage.toString(),
+                        rating = item.voteAverage,
                         playtime = item.runtime,
                         onClick = { onClick(item.id) },
-                        modifier = Modifier.padding(horizontal = 20.dp)
+                        modifier = Modifier.padding(bottom = 10.dp)
                     )
                 }
 
@@ -181,6 +183,7 @@ private fun ScreenPreview() {
                         originalTitle = "Original title",
                         originalLanguage = "English",
                         voteAverage = "8.8",
+                        runtime = 151,
                         genres = null
 
                     )
